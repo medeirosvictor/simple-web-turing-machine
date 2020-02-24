@@ -1,24 +1,40 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './static/css/index.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <h1 className="header">
+            Turing Machine Simulator
+        </h1>
+        <div className="main-form">
+            <div className="main-form_input-group">
+                <label for="main-form-input">Input:</label>
+                <input type="text" name="main-form-input" id="main-form-input" placeholder="example: 1001010"/>
+            </div>
+
+            <div className="main-form_input-group">
+                <label for="main-form-initial-state">Initial state:</label>
+                <input type="text" name="main-form-initial-state" id="main-form-initial-state" placeholder="example: q1"/>
+            </div>
+
+            <div className="main-form_input-group">
+                <label for="main-form-final-state">Final state:</label>
+                <input type="text" name="main-form-final-state" id="main-form-final-state" placeholder="example: qf"/>
+            </div>
+
+            <div className="main-form_input-group">
+                <label for="main-form-commands">Commands:</label>
+
+                <textarea id="main-form-commands" name="main-form-commands"
+                            rows="5" cols="33" placeholder="example: (q1, 0, q1, 1, >)">
+                </textarea>
+            </div>
+
+            <div className="submit-button">
+                <input type="submit" name="main-form-submit" value="simulate"/>
+            </div>
+        </div>
     </div>
   );
 }
