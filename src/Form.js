@@ -170,12 +170,12 @@ class Form extends Component {
 
                     <div className="main-form_input-group">
                         <label htmlFor="initialQ">Initial state:</label>
-                        <input type="text" name="initialQ" id="initialQ" placeholder="example: q0" value="q0" onChange={this.handleChange} disabled={this.state.isRunning}/>
+                        <input type="text" name="initialQ" id="initialQ" placeholder="example: q0" onChange={this.handleChange} disabled={this.state.isRunning}/>
                     </div>
 
                     <div className="main-form_input-group">
                         <label htmlFor="finalQ">Final state:</label>
-                        <input type="text" name="finalQ" id="finalQ" placeholder="example: qf" value="qf" onChange={this.handleChange} disabled={this.state.isRunning}/>
+                        <input type="text" name="finalQ" id="finalQ" placeholder="example: qf" onChange={this.handleChange} disabled={this.state.isRunning}/>
                     </div>
 
                     <div className="main-form_input-group">
