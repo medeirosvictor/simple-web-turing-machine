@@ -65,6 +65,7 @@ html, body {
             opacity: 0.7;
             transition: 0.3s;
             margin: 10px 0;
+            width: 100%;
 
             &:disabled:hover {
                 opacity: 0.7;
@@ -84,7 +85,7 @@ html, body {
     .tm {
         &-tape-wrapper {
             margin: 60px 0;
-            min-height: 80px;
+            min-height: 60px;
             display: flex;
             overflow: auto;
             padding: 35px 0;
@@ -98,7 +99,7 @@ html, body {
             align-items: center;
             padding: 10px;
             text-align: center;
-            min-width: 60px;
+            min-width: 40px;
             justify-content: center;
             position: relative;
 

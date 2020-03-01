@@ -12,14 +12,15 @@ class Form extends Component {
             tapeBlockList: [],
             width: window.innerWidth,
             height: window.innerHeight,
-            blockSize: 60,
+            blockSize: 40,
             isRunning: false,
             header: 0,
             currentState: "q0",
             currentRead: "",
             nextState: "",
             currentWrite: "",
-            nextDirection: ""
+            nextDirection: "",
+            simulationSpeed: 1000
         }
     }
 
@@ -91,10 +92,8 @@ class Form extends Component {
     }
 
     runSimulation = () => {
-        if (this.state.currentState === this.state.finalQ) {
-            this.acceptEnd()
-        } else {
-            setTimeout(() => {
+        
+            var simulation = setInterval(() => {
                 //Search for rule for current read
                 let currentBlockIndex = this.state.header
                 let tapeBlockList = this.state.tapeBlockList
@@ -132,6 +131,8 @@ class Form extends Component {
                         } else if (ruleDirection === '<') {
                             tapeBlockList[currentBlockIndex].headerStatus = "notIt"
                             tapeBlockList[currentBlockIndex-1].headerStatus = "onIt"
+                        } else if (ruleDirection === '|') {
+                            break
                         }
     
                         break
@@ -146,9 +147,16 @@ class Form extends Component {
                     nextState: currentState,
                     currentWrite: ruleWrite,
                     nextDirection: ruleDirection
-                }, this.runSimulation)
-            }, 1000)
-        }
+                })
+
+                setTimeout(() => {
+                    if (this.state.currentState === this.state.finalQ) {
+                        clearInterval(simulation)
+                        alert("final state accepted")
+                    }
+                }, this.state.simulationSpeed/2)
+                
+            }, this.state.simulationSpeed)
     }
 
     render () {
@@ -171,7 +179,7 @@ class Form extends Component {
                     </div>
 
                     <div className="main-form_input-group">
-                        <label htmlFor="commands">Commands:</label>
+                        <label htmlFor="commands">Instructions:</label>
 
                         <textarea 
                             id="commands" name="commands"
@@ -183,7 +191,7 @@ class Form extends Component {
                         SIMULATE
                     </button>
 
-                    <button className={this.state.isRunning ? `cancel-button`:`cancel-button not-visible`} value="CANCEL"onClick={this.handleCancel} disabled={!this.state.isRunning}>
+                    <button className={this.state.isRunning ? `cancel-button`:`cancel-button not-visible`} value="RELOAD"onClick={this.handleCancel} disabled={!this.state.isRunning}>
                         CANCEL
                     </button>
                 </div>
