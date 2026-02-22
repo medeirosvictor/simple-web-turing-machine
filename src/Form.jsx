@@ -12,11 +12,20 @@ class Form extends Component {
       tapeBlockList.push({ value: '_', headerStatus: 'notIt' })
     }
 
+    const defaultRules = [
+      'q0, 1, q0, 1, >',
+      'q0, 0, q0, 0, >',
+      'q0, _, qI, _, <',
+      'qI, 1, qI, 0, <',
+      'qI, 0, qf, 1, |',
+      'qI, _, qf, 1, |'
+    ].join('\n')
+
     this.state = {
-      input: '1001010',
+      input: '1011',
       initialQ: 'q0',
       finalQ: 'qf',
-      commands: '',
+      commands: defaultRules,
       tapeBlockList,
       width,
       height: window.innerHeight,
@@ -201,7 +210,7 @@ class Form extends Component {
               type="text"
               name="main-form-input"
               id="main-form-input"
-              placeholder="e.g. 1001010"
+              defaultValue={this.state.input}
               onChange={this.handleChange}
               disabled={isRunning}
             />
@@ -215,7 +224,7 @@ class Form extends Component {
                 type="text"
                 name="initialQ"
                 id="initialQ"
-                placeholder="q0"
+                defaultValue={this.state.initialQ}
                 onChange={this.handleChange}
                 disabled={isRunning}
               />
@@ -227,7 +236,7 @@ class Form extends Component {
                 type="text"
                 name="finalQ"
                 id="finalQ"
-                placeholder="qf"
+                defaultValue={this.state.finalQ}
                 onChange={this.handleChange}
                 disabled={isRunning}
               />
@@ -241,7 +250,7 @@ class Form extends Component {
               id="commands"
               name="commands"
               rows="8"
-              placeholder={"q0, 1, q0, 1, >\nq0, 0, q0, 0, >\nq0, _, qf, _, |"}
+              defaultValue={this.state.commands}
               onChange={this.handleChange}
               disabled={isRunning}
             />
