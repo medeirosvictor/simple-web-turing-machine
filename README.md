@@ -1,11 +1,13 @@
-## Turing Machine Simulator - built with ReactJS
+## Turing Machine Simulator — built with React + Vite
 
-### https://quiet-citadel-97839.herokuapp.com/
+🔗 **Live demo**: https://medeirosvictor.github.io/simple-web-turing-machine/
+
+A web-based Turing Machine simulator. Define input, states, and transition rules, then watch the tape animate step-by-step.
 
 ### Example of usage:
-**Input**: entry for the machine
-**Initial State**: (q0)
-**Final State**: (qf) - for the simulation to be accepted
+**Input**: entry for the machine  
+**Initial State**: (q0)  
+**Final State**: (qf) — for the simulation to be accepted  
 **Instructions**: 
 - (currentState, currentRead, nextState, currentWrite, direction) = (q0, 0, q1, 1, >)
 - directions accepted:
@@ -50,15 +52,31 @@ qI, 1, qI, 0, <
 qI, 0, qf, 1, |
 qI, _, qf, 1, |
 ```
-## Available Scripts
 
-In the project directory, you can run:
+## Development
 
-### `yarn start`
-Runs the app in the development mode.
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-The page will reload if you make edits.
-You will also see any lint errors in the console.
+```bash
+# Install dependencies
+pnpm install
 
-### `gulp watch`
-Starts compiling process for the styles in SASS
+# Start dev server (port 3000)
+pnpm dev
+
+# Run tests
+pnpm test
+
+# Production build
+pnpm build
+
+# Preview production build
+pnpm preview
+```
+
+## Deployment
+
+Deploys automatically to GitHub Pages via GitHub Actions on push to `master`.
+
+Manual deploy:
+```bash
+pnpm deploy
+```
