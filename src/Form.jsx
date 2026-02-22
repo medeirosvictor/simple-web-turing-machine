@@ -122,7 +122,6 @@ class Form extends Component {
         if (ruleState === currentState && validRuleRead) {
           matched = true
 
-          // Apply rule
           const newState = ruleNextState
           if (ruleRead !== '*') {
             tapeBlockList[currentBlockIndex] = {
@@ -188,85 +187,115 @@ class Form extends Component {
   }
 
   render() {
+    const { isRunning, currentState, currentRead, nextState, currentWrite, nextDirection } = this.state
+
     return (
-      <div>
-        <div className="main-form">
-          <div className="main-form_input-group">
-            <label htmlFor="main-form-input">Input:</label>
+      <div className="simulator">
+        <div className="control-panel">
+          <h2 className="control-panel__title">Configuration</h2>
+
+          <div className="field">
+            <label className="field__label" htmlFor="main-form-input">Input</label>
             <input
+              className="field__input"
               type="text"
               name="main-form-input"
               id="main-form-input"
-              placeholder="example: 1001010"
+              placeholder="e.g. 1001010"
               onChange={this.handleChange}
-              disabled={this.state.isRunning}
+              disabled={isRunning}
             />
           </div>
 
-          <div className="main-form_input-group">
-            <label htmlFor="initialQ">Initial state:</label>
-            <input
-              type="text"
-              name="initialQ"
-              id="initialQ"
-              placeholder="example: q0"
-              onChange={this.handleChange}
-              disabled={this.state.isRunning}
-            />
+          <div className="field-row">
+            <div className="field">
+              <label className="field__label" htmlFor="initialQ">Initial state</label>
+              <input
+                className="field__input"
+                type="text"
+                name="initialQ"
+                id="initialQ"
+                placeholder="q0"
+                onChange={this.handleChange}
+                disabled={isRunning}
+              />
+            </div>
+            <div className="field">
+              <label className="field__label" htmlFor="finalQ">Final state</label>
+              <input
+                className="field__input"
+                type="text"
+                name="finalQ"
+                id="finalQ"
+                placeholder="qf"
+                onChange={this.handleChange}
+                disabled={isRunning}
+              />
+            </div>
           </div>
 
-          <div className="main-form_input-group">
-            <label htmlFor="finalQ">Final state:</label>
-            <input
-              type="text"
-              name="finalQ"
-              id="finalQ"
-              placeholder="example: qf"
-              onChange={this.handleChange}
-              disabled={this.state.isRunning}
-            />
-          </div>
-
-          <div className="main-form_input-group">
-            <label htmlFor="commands">Instructions:</label>
+          <div className="field">
+            <label className="field__label" htmlFor="commands">Transition rules</label>
             <textarea
+              className="field__textarea"
               id="commands"
               name="commands"
-              rows="10"
-              cols="40"
-              placeholder="example: q1, 0, q1, 1, >"
+              rows="8"
+              placeholder={"q0, 1, q0, 1, >\nq0, 0, q0, 0, >\nq0, _, qf, _, |"}
               onChange={this.handleChange}
-              disabled={this.state.isRunning}
+              disabled={isRunning}
             />
           </div>
 
-          <button
-            className="submit-button"
-            onClick={this.handleFormSubmit}
-            disabled={this.state.isRunning}
-          >
-            SIMULATE
-          </button>
+          <div className="control-panel__actions">
+            <button
+              className="btn btn--primary"
+              onClick={this.handleFormSubmit}
+              disabled={isRunning}
+            >
+              ▶ Simulate
+            </button>
 
-          <button
-            className={this.state.isRunning ? 'cancel-button' : 'cancel-button not-visible'}
-            value="RELOAD"
-            onClick={this.handleCancel}
-            disabled={!this.state.isRunning}
-          >
-            CANCEL
-          </button>
+            {isRunning && (
+              <button
+                className="btn btn--danger"
+                onClick={this.handleCancel}
+              >
+                ■ Stop
+              </button>
+            )}
+          </div>
         </div>
 
         <Tape tapeList={this.state.tapeBlockList} />
 
-        <div className={this.state.isRunning ? 'simulation-info' : 'simulation-info not-visible'}>
-          <div><span className="bold">Current State</span>: {this.state.currentState}</div>
-          <div><span className="bold">Reading</span>: {this.state.currentRead}</div>
-          <div><span className="bold">Next State</span>: {this.state.nextState}</div>
-          <div><span className="bold">Writing</span>: {this.state.currentWrite}</div>
-          <div><span className="bold">Direction</span>: {this.state.nextDirection}</div>
-        </div>
+        {isRunning && (
+          <div className="state-panel">
+            <h3 className="state-panel__title">Live State</h3>
+            <div className="state-panel__grid">
+              <div className="state-panel__item">
+                <span className="state-panel__label">State</span>
+                <span className="state-panel__value">{currentState}</span>
+              </div>
+              <div className="state-panel__item">
+                <span className="state-panel__label">Reading</span>
+                <span className="state-panel__value">{currentRead}</span>
+              </div>
+              <div className="state-panel__item">
+                <span className="state-panel__label">Next</span>
+                <span className="state-panel__value">{nextState}</span>
+              </div>
+              <div className="state-panel__item">
+                <span className="state-panel__label">Writing</span>
+                <span className="state-panel__value">{currentWrite}</span>
+              </div>
+              <div className="state-panel__item">
+                <span className="state-panel__label">Direction</span>
+                <span className="state-panel__value">{nextDirection === '>' ? '→ Right' : nextDirection === '<' ? '← Left' : '⏸ Halt'}</span>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     )
   }

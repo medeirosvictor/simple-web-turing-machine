@@ -4,9 +4,9 @@ import { describe, it, expect } from 'vitest'
 import App from './App'
 
 describe('App', () => {
-  it('renders the Turing Machine Simulator heading', () => {
+  it('renders the Turing Machine heading', () => {
     render(<App />)
-    const heading = screen.getByText(/turing machine simulator/i)
+    const heading = screen.getByText(/turing machine/i)
     expect(heading).toBeInTheDocument()
   })
 })
